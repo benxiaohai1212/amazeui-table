@@ -342,7 +342,7 @@
         },
         trimOnSearch: true,
         clickToSelect: false,
-        singleSelect: false,
+        singleSelect: true,
         toolbar: undefined,
         toolbarAlign: 'left',
         checkboxHeader: true,
@@ -1814,6 +1814,7 @@
             this.scrollTo(0);
         }
 
+
         // click to select by column
         this.$body.find('> tr[data-index] > td').off('click dblclick').on('click dblclick', function (e) {
             var $td = $(this),
@@ -1835,7 +1836,9 @@
             // if click to select - then trigger the checkbox/radio click
             if (e.type === 'click' && that.options.clickToSelect && column.clickToSelect) {
                 var $selectItem = $tr.find(sprintf('[name="%s"]', that.options.selectItemName));
-                if ($selectItem.length) {
+                // checkbox 设置 clickToSelect = true 实现 radio 效果
+                var checked = $selectItem.prop('checked');
+                if ($selectItem.length && !checked) {
                     $selectItem[0].click(); // #144: .trigger('click') bug
                 }
             }
